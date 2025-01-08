@@ -5,8 +5,10 @@
   "dependencies": {
     "@videojs/http-streaming": "^3.16.2",
     "cra-template": "1.2.0",
+    "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-leaflet": "^5.0.0-rc.2",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
     "videojs": "^1.0.0"
