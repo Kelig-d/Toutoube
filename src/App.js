@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React from 'react'
+import VideoPlayer from "./VideoPlayer";
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const playerRef = React.useRef(null);
+
+    const videoOptions = {
+        autoplay: true,
+        controls: true,
+        responsive: true,
+        fluid: true,
+        sources: [{
+            src: 'https://ia800900.us.archive.org/32/items/Route_66_-_an_American_badDream/Route_66_-_an_American_badDream_512kb.mp4',
+            type: 'video/mp4'
+        }]
+    };
+
+    const handlePlayerReady = (player) => {
+        playerRef.current = player;
+
+    };
+    React.createContext()
+    return (
+        <div className="flex-1 shrink max-w-screen-lg">
+            <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
+        </div>
+)
+    ;
 }
 
 export default App;
