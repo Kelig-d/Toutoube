@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@videojs/http-streaming": "^3.16.2",
+    "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
     "leaflet": "^1.9.4",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.7",
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0-rc.2",
     "react-scripts": "5.0.1",

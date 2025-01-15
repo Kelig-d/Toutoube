@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import VideoPlayer from "./VideoPlayer";
+import Chat from "./WebSocket";
 import './App.css';
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 import "leaflet/dist/leaflet.css"
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 
@@ -42,26 +46,40 @@ function App() {
         React.createContext()
         return (
             <div>
+                <Container>
+                    <Row className='mt-5'>
+                        <Col sm={8}>
+                            <div className="flex-1 shrink max-w-screen-lg">
+                                <VideoPlayer options={videoOptions} onReady={handlePlayerReady}/>
+                            </div>
+                        </Col>
+                        <Col sm={4}>
+                            <div className="h-96 ">
+                                <Chat>
 
-                <div className="flex-1 shrink max-w-screen-lg">
-                    <VideoPlayer options={videoOptions} onReady={handlePlayerReady}/>
-                </div>
-                <div className="max-w-xl h-96 max-h-xl">
-                    <MapContainer center={[151.505, -0.09]} zoom={13} scrollWheelZoom={true}>
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <Marker position={[51.505, -0.09]}>
-                            <Popup>
-                                A pretty CSS3 popup. <br/> Easily customizable.
-                            </Popup>
-                        </Marker>
-                    </MapContainer>
-                </div>
-
+                                </Chat>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col>
+                            <div className="max-w-xl h-96 max-h-xl">
+                                <MapContainer center={[151.505, -0.09]} zoom={13} scrollWheelZoom={true}>
+                                    <TileLayer
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    />
+                                    <Marker position={[51.505, -0.09]}>
+                                        <Popup>
+                                            A pretty CSS3 popup. <br/> Easily customizable.
+                                        </Popup>
+                                    </Marker>
+                                </MapContainer>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
-
         );
 }
 
