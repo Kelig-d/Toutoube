@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
@@ -6,20 +6,19 @@ import Stack from 'react-bootstrap/Stack';
 
 export function Chat() {
     const [messages, setMessages] = useState([]);
-    const [connected, setConnected] = useState(false);
+    const connection = useRef(null);
     const [currentMessage, setCurrentMessage] = useState("");
+    const [currentUser, setCurrentUser] = useState("");
 
     useEffect(() => {
         const ws = new WebSocket("wss://iai3-react-34db9d7c5920.herokuapp.com");
 
         // connexion a la WebSocket
-        ws.onopen = () => {
-            console.log("connected");
-            setConnected(true);
-        };
-        
-        // messages
-        ws.onmessage = (evt) => {
+        ws.addEventListener("open", () => {
+            ws.send("Connection established")
+        })
+
+        ws.addEventListener("message", (evt) => {
             console.log("Message received:", evt.data);
             try {
                 const newMessages = JSON.parse(evt.data);
@@ -27,32 +26,35 @@ export function Chat() {
             } catch (error) {
                 console.error("Failed to parse message:", error);
             }
-        };
+        })
+        connection.current = ws;
 
+        /*
         ws.onclose = () => {
             console.log("disconnected, reconnect.");
             setConnected(false);
         };
-
+        */
         return () => {
             ws.close();
         };
 
     }, []);
 
-    const submitMessage = messageString => {
-        const message = { name: this.state.name, message: messageString };
-        this.ws.send(JSON.stringify(message));
+    const submitMessage = (currentUser, messageString) => {
+        const message = { name: currentUser, message: messageString };
+        connection.current.send(JSON.stringify(message));
     };
 
     return (
         <div>
             <Form>
                 <Stack direction="horizontal" gap={3}>
-                        <Form.Control className="me-auto" placeholder="Add your item here..." value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
+                    <Form.Control className="me-auto" placeholder="Your name..." value={currentUser} onChange={(e) => setCurrentUser(e.target.value)}/>
+                    <Form.Control className="me-auto" placeholder="Your message..." value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
                         <Button variant="secondary"
                             onClick={() => {
-                                submitMessage(currentMessage);
+                                submitMessage(currentUser, currentMessage);
                                 setCurrentMessage(""); // Réinitialiser le champ de saisie
                             }}
                         >Submit</Button>

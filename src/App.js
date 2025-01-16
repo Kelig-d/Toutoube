@@ -21,7 +21,7 @@ function App() {
                     throw new Error('Erreur lors du chargement des données');
                 }
                 const data = await response.json();
-                setjsonData(data); // Met à jour les données JSON
+                setjsonData(data)
 
         };
 
