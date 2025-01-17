@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-scrollbars__thumb {
+  overflow:scroll;
+  max-height: 500px;
+}
