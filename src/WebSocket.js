@@ -10,6 +10,8 @@ export function Chat() {
     const [currentMessage, setCurrentMessage] = useState("");
     const [currentUser, setCurrentUser] = useState("");
 
+    const chatParent = useRef(null);
+
     useEffect(() => {
         const ws = new WebSocket("wss://iai3-react-34db9d7c5920.herokuapp.com");
 
@@ -19,15 +21,16 @@ export function Chat() {
         })
 
         ws.addEventListener("message", (evt) => {
-            console.log("Message received:", evt.data);
+            console.log("Message received:", evt.data)
             try {
-                const newMessages = JSON.parse(evt.data);
-                setMessages((prevMessages) => [...prevMessages, ...newMessages]);
+                const newMessages = JSON.parse(evt.data)
+                setMessages((prevMessages) => [...prevMessages, ...newMessages])
+                chatParent.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
             } catch (error) {
-                console.error("Failed to parse message:", error);
+                console.error("Failed to parse message:", error)
             }
         })
-        connection.current = ws;
+        connection.current = ws;     
 
         /*
         ws.onclose = () => {
@@ -36,14 +39,14 @@ export function Chat() {
         };
         */
         return () => {
-            ws.close();
+            ws.close()
         };
 
     }, []);
 
     const submitMessage = (currentUser, messageString) => {
-        const message = { name: currentUser, message: messageString };
-        connection.current.send(JSON.stringify(message));
+        const message = { name: currentUser, message: messageString }
+        connection.current.send(JSON.stringify(message))
     };
 
     return (
@@ -62,15 +65,18 @@ export function Chat() {
                         <Button variant="outline-danger">Reset</Button>
                 </Stack>
             </Form>
-            {messages.length > 0 ? (
-                messages.map((message, index) => (
-                    <div key={index}>
-                        <p><strong>{message.name}</strong>: {message.message}</p>
-                    </div>
-                ))
-            ) : (
-                <p>No messages received yet.</p>
-            )}
+            <div id="chat" className="custom-scrollbars__thumb mt-4">
+                {messages.length > 0 ? (
+                    messages.map((message, index) => (
+                        <div key={index} >
+                            <p><strong>{message.name}</strong>: {message.message}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No messages received yet.</p>
+                )}
+                <div id={'chatParent'} ref={chatParent}/>
+            </div>
         </div>
     );
 }
