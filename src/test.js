@@ -1,5 +1,7 @@
 import React from 'react';
 import VideoPlayer from "./VideoPlayer";
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
+import Chat from "./WebSocket";
 
 
 function Test(thing) {
@@ -28,8 +30,22 @@ function Test(thing) {
                 <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
             </div>
         </div>
-        <div class="col-start-3 row-span-0 border-2"> Chat </div>
-        <div class="row-start-2 col-start-3 border-2"> Map</div>
+        <div class="col-start-3 row-span-0 border-2">                                 
+            <Chat/>
+         </div>
+        <div class="row-start-2 col-start-3 border-2"> 
+                                            <MapContainer center={[151.505, -0.09]} zoom={13} scrollWheelZoom={true}>
+                                                <TileLayer
+                                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                                />+
+                                                <Marker position={[51.505, -0.09]}>
+                                                    <Popup>
+                                                        A pretty CSS3 popup. <br/> Easily customizable.
+                                                    </Popup>
+                                                </Marker>
+                                            </MapContainer>
+        </div>
         <div class="row-start-2 col-start-0 col-span-2 border-2"> mot</div>
      
 
