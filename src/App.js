@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import VideoPlayer from "./VideoPlayer";
 import Chat from "./WebSocket";
 import './App.css';
@@ -15,8 +15,6 @@ function App() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log("coucou");
-
         const fetchData = async () => {
             try {
                 const response = await fetch('https://iai3-react-34db9d7c5920.herokuapp.com/backend');
@@ -47,34 +45,34 @@ function App() {
     const handlePlayerReady = (player) => {
         playerRef.current = player;
     };
-
     return (
         <div>
-            <Container>
-                <Row className='mt-5'>
-                    <Col sm={8}>
-                        <div className="flex-1 shrink max-w-screen-lg">
-                            <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
-                        </div>
-                    </Col>
-                    <Col sm={4}>
-                        <div className="h-96 ">
-                            <Chat />
-                        </div>
-                    </Col>
-                </Row>
-                <Row className='mt-5'>
-                    <Col>
-                        {loading ? (
-                            <p>Chargement des données...</p>
-                        ) : error ? (
-                            <p>Erreur : {error}</p>
-                        ) : (
-                            <MapViewer markers={jsonData.Waypoints || []} />
-                        )}
-                    </Col>
-                </Row>
-            </Container>
+                <Container>
+                    <Row className='mt-5'>
+                        <Col sm={8}>
+                            <div className="flex-1 shrink max-w-screen-lg">
+                                    <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
+                            </div>
+                        </Col>
+                        <Col sm={4}>
+                            <div className="h-96 ">
+                                <Chat />
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col>
+                            {loading ? (
+                                <p>Chargement des données...</p>
+                            ) : error ? (
+                                <p>Erreur : {error}</p>
+                            ) : (
+                                    <MapViewer markers={jsonData.Waypoints || []} playerRef={playerRef} />
+
+                            )}
+                        </Col>
+                    </Row>
+                </Container>
         </div>
     );
 }
