@@ -67,7 +67,7 @@ function App() {
                         </Col>
                         <Col sm={4}>
                             <div className="h-96 ">
-                                <Chat />
+                                <Chat playerRef={playerRef}/>
                             </div>
                         </Col>
                     </Row>
