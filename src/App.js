@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import VideoPlayer from "./VideoPlayer";
 import Chapitrage from "./chapitrage";
+import TextChap from "./TextChap";
 import Chat from "./WebSocket";
 import './App.css';
 import "leaflet/dist/leaflet.css";
@@ -60,10 +61,21 @@ function App() {
 
                             )}
                         
+
+                     
+
                           
                              <div className="flex-1 shrink max-w-screen-lg">
                                     <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
                             </div>
+                            {loading ? (
+                                <p>Chargement des données...</p>
+                            ) : error ? (
+                                <p>Erreur : {error}</p>
+                            ) : (
+                                <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
+
+                            )}
                         </Col>
                         <Col sm={4}>
                             <div className="h-96 ">
