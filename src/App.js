@@ -5,9 +5,6 @@ import TextChap from "./TextChap";
 import Chat from "./WebSocket";
 import './App.css';
 import "leaflet/dist/leaflet.css";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import MapViewer from "./MapViewer";
 
 function App() {
@@ -48,54 +45,46 @@ function App() {
         playerRef.current = player;
     };
         return (
-        <div class="grid grid-col-3 h-screen">
-            <div class="col-start-0 row-span-1 col-span-2 border-2">
-                <div className="flex-1 shrink max-w-screen-lg">
-    
+            <div>
                 {loading ? (
-                                    <p>Chargement des données...</p>
-                                ) : error ? (
-                                    <p>Erreur : {error}</p>
-                                ) : (
-                                    <Chapitrage Chapters={jsonData.Chapters}  playerRef={playerRef}/>
-    
-                                )}
-    
-    
-    <div className="flex-1 shrink max-w-screen-lg">
-                                        <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
+                    <p>Chargement des données...</p>
+                ) : error ? (
+                    <p>Erreur : {error}</p>
+                ) : (
+                    <div className="grid grid-col-3 h-screen">
+                        <div
+                            className="col-start-0 row-span-1 col-span-2 border-2 bg-white shadow-md rounded-lg p-4 m-2 flex flex-col items-center justify-start">
+                            {/* Chapitrage centré et limité en taille */}
+                            <div className="w-full max-w-3xl text-center overflow-hidden">
+                                <Chapitrage Chapters={jsonData.Chapters} playerRef={playerRef}/>
+                            </div>
+
+                            {/* VideoPlayer centré et limité en taille */}
+                            <div className="w-full max-w-3xl flex justify-center mt-4 min-h-[300px]">
+                                <div className="flex justify-center items-center w-full h-full">
+                                    <VideoPlayer options={videoOptions} onReady={handlePlayerReady}/>
                                 </div>
-    
-                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-start-3 row-span-0 border-2 bg-white shadow-md rounded-lg p-4 m-2">
+                            <Chat playerRef={playerRef}/>
+                        </div>
+                        <div
+                            className="row-start-2 col-start-3 border-2 bg-white shadow-md rounded-lg p-4 m-2 flex justify-center items-center h-full">
+                            <MapViewer markers={jsonData.Waypoints || []} playerRef={playerRef}/>
+                        </div>
+
+
+                        <div
+                            className="row-start-2 col-start-0 col-span-2 border-2 bg-white shadow-md rounded-lg p-4 m-2">
+                            <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
+
+                        </div>
+                    </div>
+                )}
             </div>
-            <div class="col-start-3 row-span-0 border-2">                                 
-                <Chat playerRef={playerRef}/>
-             </div>
-            <div class="row-start-2 col-start-3 border-2"> 
-            {loading ? (
-                                    <p>Chargement des données...</p>
-                                ) : error ? (
-                                    <p>Erreur : {error}</p>
-                                ) : (
-                                        <MapViewer markers={jsonData.Waypoints || []} playerRef={playerRef} />
-    
-                                )}
-            </div>
-            <div class="row-start-2 col-start-0 col-span-2 border-2"> 
-            {loading ? (
-                                    <p>Chargement des données...</p>
-                                ) : error ? (
-                                    <p>Erreur : {error}</p>
-                                ) : (
-                                    <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
-    
-                                )}
-    
-            </div>
-         
-    
-        </div>
-      );
+        );
 }
 
 export default App;

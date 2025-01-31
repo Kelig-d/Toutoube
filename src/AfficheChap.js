@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function Fiches(props){
     const [toShow, setToShow] = useState(null)  
    
     function handleClick(url){
-        setToShow(url)
+        if(toShow === url) setToShow(null)
+        else setToShow(url)
     }
 
     return (
@@ -18,17 +19,20 @@ function Fiches(props){
             {Data.title}
           </button>
         ))}
-  
-        <iframe
-            width="560"
-            height="315"
-            src={toShow}
-            frameBorder="0"
-            allowFullScreen
-            title="Contenu"
-          ></iframe>
+          {(()=> {
+              if(toShow) {
+                  return (<iframe
+                      width="560"
+                      height="315"
+                      src={toShow}
+                      allowFullScreen
+                      title="Contenu"
+                  ></iframe>)
+              }
+          })()}
+
       </div>
     );
-  }
+}
 
 export default Fiches

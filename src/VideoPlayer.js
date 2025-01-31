@@ -8,29 +8,26 @@ export const VideoPlayer = (props) => {
     const {options, onReady} = props;
 
     React.useEffect(() => {
-
         // Make sure Video.js player is only initialized once
         if (!playerRef.current) {
-            // The Video.js player needs to be _inside_ the component el for React 18 Strict Mode.
+            // Create video-js element and append to the ref
             const videoElement = document.createElement("video-js");
 
             videoElement.classList.add('vjs-big-play-centered');
+            videoElement.style.width = '100%'; // Ensure video takes up the full width
+            videoElement.style.height = '100%'; // Ensure video takes up the full height
             videoRef.current.appendChild(videoElement);
 
             const player = playerRef.current = videojs(videoElement, options, () => {
                 videojs.log('player is ready');
                 onReady && onReady(player);
             });
-
-            // You could update an existing player in the `else` block here
-            // on prop change, for example:
         } else {
             const player = playerRef.current;
-
             player.autoplay(options.autoplay);
             player.src(options.sources);
         }
-    }, [onReady, options, videoRef]);
+    }, [onReady, options]);
 
     // Dispose the Video.js player when the functional component unmounts
     React.useEffect(() => {
@@ -45,8 +42,8 @@ export const VideoPlayer = (props) => {
     }, [playerRef]);
 
     return (
-        <div data-vjs-player="">
-            <div ref={videoRef} />
+        <div data-vjs-player="" style={{width: '100%', height: '100%'}}>
+            <div ref={videoRef} style={{width: '100%', height: '100%'}} />
         </div>
     );
 }
