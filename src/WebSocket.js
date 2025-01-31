@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { NavLink } from "react-bootstrap";
 
 
 export function Chat(props) {
@@ -29,7 +28,7 @@ export function Chat(props) {
             try {
                 const newMessages = JSON.parse(evt.data)
                 setMessages((prevMessages) => [...prevMessages, ...newMessages])
-                chatParent.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
+                chatParent.current.scrollIntoView({ block: 'end', behavior: 'instant' });
             } catch (error) {
                 console.error("Failed to parse message:", error)
             }
@@ -65,7 +64,11 @@ export function Chat(props) {
 
     function date (messagedate){
         const newDate = new Date(messagedate).toLocaleString("fr-FR", { month: "2-digit", day: "2-digit", year: "numeric", hour:"2-digit", minute:"2-digit", second: "2-digit"})
-        return  newDate
+        if (newDate == "Invalid Date"){
+            return null 
+        }else {
+            return  newDate
+        }
     }
 
     
@@ -76,8 +79,8 @@ export function Chat(props) {
             var m = Math.floor(messageMoment % 3600 / 60);
             var s = Math.floor(messageMoment % 3600 % 60);
 
-            var hDisplay = h > 0 ? h + (h == 1 ? ":" : ":") : "";
-            var mDisplay = m > 0 ? m + (m == 1 ? ":" : ":") : "";
+            var hDisplay = h > 0 ? h + ":" : "";
+            var mDisplay = m > 0 ? m+ ":" : "";
             return hDisplay + mDisplay + s; 
         }
         else {
