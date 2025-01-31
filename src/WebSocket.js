@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { NavLink } from "react-bootstrap";
 
 
 export function Chat(props) {
@@ -70,7 +71,7 @@ export function Chat(props) {
     
     function timeMessage(messageMoment){
         if (messageMoment != null){
-            const moment = parseInt(messageMoment)/60
+            const moment = parseInt(messageMoment)/60;
                 return moment
         }
         else {
@@ -105,9 +106,8 @@ export function Chat(props) {
             <div id="chat" className="custom-scrollbars__thumb mt-4">
                 {messages.length > 0 ? (
                     messages.map((message) => (
-                        <div >
-                            <p> {date(message.when)} 
-                                <strong>  {message.name} : </strong> {message.message}  {timeMessage(message.moment)}
+                        <div>
+                            <p> {date(message.when)} <strong>  {message.name} : </strong> {message.message} <Button variant="link" onClick={()=>{  props.playerRef.current.currentTime(message.moment)}}>{timeMessage(message.moment)}</Button>
                             </p>
                         </div>
                     ))
