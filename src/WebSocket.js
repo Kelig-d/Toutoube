@@ -79,9 +79,9 @@ export function Chat(props) {
             var m = Math.floor(messageMoment % 3600 / 60);
             var s = Math.floor(messageMoment % 3600 % 60);
 
-            var hDisplay = h > 0 ? h + ":" : "";
-            var mDisplay = m > 0 ? m+ ":" : "";
-            return hDisplay + mDisplay + s; 
+            var hDisplay = h > 0 ? ( h < 10 ? "0"+h : h) + ":"  : "";
+            var mDisplay = m > 0 ? ( m < 10 ? "0"+m : m)+ ":" : "";
+            return hDisplay + mDisplay + ( s < 10 ? "0"+s : s); 
         }
         else {
             return ""
@@ -112,18 +112,35 @@ export function Chat(props) {
                     <Form.Control className="me-auto" placeholder="Your message..." value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} required/>
             </Form>
             <div id="chat" className="custom-scrollbars__thumb mt-4">
-                {messages.length > 0 ? (
-                    messages.map((message, index) => (
-                        <div key={index}>
-                            <p> {date(message.when)} <strong>  {message.name} : </strong> {message.message} <Button variant="link" size="sm" onClick={()=>{  props.playerRef.current.currentTime(message.moment)}}>{timeMessage(message.moment)}</Button>
-                            </p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No messages received yet.</p>
-                )}
-                <div id={'chatParent'} ref={chatParent}></div>
-            </div>
+    {messages.length > 0 ? (
+        messages.map((message, index) => {
+            console.log(message.message)
+            if(message.message !== undefined && message.message !== "") { 
+                return(
+                <div key={index}>
+                    <p> 
+                        {date(message.when)} <strong>{message.name} :</strong> {message.message} 
+                        <Button 
+                            variant="link" 
+                            size="sm" 
+                            onClick={() => { props.playerRef.current.currentTime = message.moment; }}
+                        >
+                            {timeMessage(message.moment)}
+                        </Button>
+                    </p>
+                </div>)
+             }
+
+        }
+            
+           
+        )
+    ) : (
+        <p>No messages received yet.</p>
+    )}
+    <div id="chatParent" ref={chatParent}></div>
+</div>
+
         </div>
     );
 }
