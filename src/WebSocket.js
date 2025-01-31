@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Stack from 'react-bootstrap/Stack';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -48,10 +47,10 @@ export function Chat(props) {
     }, []);
 
     const submitMessage = (currentUser, messageString,currentMoment) => {
-        if(currentUser != "" && messageString != ""){
+        if(currentUser !== "" && messageString !== ""){
             console.log(parseInt(currentMoment));
                    
-            if(currentMoment == "" ){
+            if(currentMoment === "" ){
                 const message = { name: currentUser, message: messageString}
                 connection.current.send(JSON.stringify(message))
             }else {
@@ -64,7 +63,7 @@ export function Chat(props) {
 
     function date (messagedate){
         const newDate = new Date(messagedate).toLocaleString("fr-FR", { month: "2-digit", day: "2-digit", year: "numeric", hour:"2-digit", minute:"2-digit", second: "2-digit"})
-        if (newDate == "Invalid Date"){
+        if (newDate === "Invalid Date"){
             return null 
         }else {
             return  newDate
@@ -114,7 +113,6 @@ export function Chat(props) {
             <div id="chat" className="custom-scrollbars__thumb mt-4">
     {messages.length > 0 ? (
         messages.map((message, index) => {
-            console.log(message.message)
             if(message.message !== undefined && message.message !== "") { 
                 return(
                 <div key={index}>
@@ -130,6 +128,7 @@ export function Chat(props) {
                     </p>
                 </div>)
              }
+             return null;
 
         }
             
