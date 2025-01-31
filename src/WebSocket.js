@@ -71,12 +71,17 @@ export function Chat(props) {
     
     function timeMessage(messageMoment){
         if (messageMoment != null){
-            const moment = parseInt(messageMoment)/60;
-                return moment
+            messageMoment = Number(messageMoment);
+            var h = Math.floor(messageMoment / 3600);
+            var m = Math.floor(messageMoment % 3600 / 60);
+            var s = Math.floor(messageMoment % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? ":" : ":") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? ":" : ":") : "";
+            return hDisplay + mDisplay + s; 
         }
         else {
-            const Nomoment = ""
-            return Nomoment
+            return ""
         }
     }
     
@@ -107,7 +112,7 @@ export function Chat(props) {
                 {messages.length > 0 ? (
                     messages.map((message) => (
                         <div>
-                            <p> {date(message.when)} <strong>  {message.name} : </strong> {message.message} <Button variant="link" onClick={()=>{  props.playerRef.current.currentTime(message.moment)}}>{timeMessage(message.moment)}</Button>
+                            <p> {date(message.when)} <strong>  {message.name} : </strong> {message.message} <Button variant="link" size="sm" onClick={()=>{  props.playerRef.current.currentTime(message.moment)}}>{timeMessage(message.moment)}</Button>
                             </p>
                         </div>
                     ))
