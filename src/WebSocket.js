@@ -113,8 +113,8 @@ export function Chat(props) {
             </Form>
             <div id="chat" className="custom-scrollbars__thumb mt-4">
                 {messages.length > 0 ? (
-                    messages.map((message) => (
-                        <div>
+                    messages.map((message, index) => (
+                        <div key={index}>
                             <p> {date(message.when)} <strong>  {message.name} : </strong> {message.message} <Button variant="link" size="sm" onClick={()=>{  props.playerRef.current.currentTime(message.moment)}}>{timeMessage(message.moment)}</Button>
                             </p>
                         </div>
