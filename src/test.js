@@ -27,26 +27,55 @@ function Test(thing) {
     <div class="grid grid-col-3 h-screen">
         <div class="col-start-0 row-span-1 col-span-2 border-2">
             <div className="flex-1 shrink max-w-screen-lg">
-                <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
+
+            {loading ? (
+                                <p>Chargement des données...</p>
+                            ) : error ? (
+                                <p>Erreur : {error}</p>
+                            ) : (
+                                <Chapitrage Chapters={jsonData.Chapters}  playerRef={playerRef}/>
+
+                            )}
+
+
+<div className="flex-1 shrink max-w-screen-lg">
+                                    <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
+                            </div>
+                            {loading ? (
+                                <p>Chargement des données...</p>
+                            ) : error ? (
+                                <p>Erreur : {error}</p>
+                            ) : (
+                                <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
+
+                            )}
+
             </div>
         </div>
         <div class="col-start-3 row-span-0 border-2">                                 
-            <Chat/>
+            <Chat playerRef={playerRef}/>
          </div>
         <div class="row-start-2 col-start-3 border-2"> 
-                                            <MapContainer center={[151.505, -0.09]} zoom={13} scrollWheelZoom={true}>
-                                                <TileLayer
-                                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                                />+
-                                                <Marker position={[51.505, -0.09]}>
-                                                    <Popup>
-                                                        A pretty CSS3 popup. <br/> Easily customizable.
-                                                    </Popup>
-                                                </Marker>
-                                            </MapContainer>
+        {loading ? (
+                                <p>Chargement des données...</p>
+                            ) : error ? (
+                                <p>Erreur : {error}</p>
+                            ) : (
+                                    <MapViewer markers={jsonData.Waypoints || []} playerRef={playerRef} />
+
+                            )}
         </div>
-        <div class="row-start-2 col-start-0 col-span-2 border-2"> mot</div>
+        <div class="row-start-2 col-start-0 col-span-2 border-2"> 
+        {loading ? (
+                                <p>Chargement des données...</p>
+                            ) : error ? (
+                                <p>Erreur : {error}</p>
+                            ) : (
+                                <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
+
+                            )}
+
+        </div>
      
 
     </div>

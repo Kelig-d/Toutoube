@@ -47,57 +47,55 @@ function App() {
     const handlePlayerReady = (player) => {
         playerRef.current = player;
     };
-    return (
-        <div>
-                <Container>
-                    <Row className='mt-5'>
-                        <Col sm={8}>
-                        {loading ? (
-                                <p>Chargement des données...</p>
-                            ) : error ? (
-                                <p>Erreur : {error}</p>
-                            ) : (
-                                <Chapitrage Chapters={jsonData.Chapters}  playerRef={playerRef}/>
-
-                            )}
-                        
-
-                     
-
-                          
-                             <div className="flex-1 shrink max-w-screen-lg">
-                                    <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
-                            </div>
-                            {loading ? (
-                                <p>Chargement des données...</p>
-                            ) : error ? (
-                                <p>Erreur : {error}</p>
-                            ) : (
-                                <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
-
-                            )}
-                        </Col>
-                        <Col sm={4}>
-                            <div className="h-96 ">
-                                <Chat playerRef={playerRef}/>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row className='mt-5'>
-                        <Col>
-                            {loading ? (
-                                <p>Chargement des données...</p>
-                            ) : error ? (
-                                <p>Erreur : {error}</p>
-                            ) : (
-                                    <MapViewer markers={jsonData.Waypoints || []} playerRef={playerRef} />
-
-                            )}
-                        </Col>
-                    </Row>
-                </Container>
+        return (
+        <div class="grid grid-col-3 h-screen">
+            <div class="col-start-0 row-span-1 col-span-2 border-2">
+                <div className="flex-1 shrink max-w-screen-lg">
+    
+                {loading ? (
+                                    <p>Chargement des données...</p>
+                                ) : error ? (
+                                    <p>Erreur : {error}</p>
+                                ) : (
+                                    <Chapitrage Chapters={jsonData.Chapters}  playerRef={playerRef}/>
+    
+                                )}
+    
+    
+    <div className="flex-1 shrink max-w-screen-lg">
+                                        <VideoPlayer options={videoOptions} onReady={handlePlayerReady} />
+                                </div>
+    
+                </div>
+            </div>
+            <div class="col-start-3 row-span-0 border-2">                                 
+                <Chat playerRef={playerRef}/>
+             </div>
+            <div class="row-start-2 col-start-3 border-2"> 
+            {loading ? (
+                                    <p>Chargement des données...</p>
+                                ) : error ? (
+                                    <p>Erreur : {error}</p>
+                                ) : (
+                                        <MapViewer markers={jsonData.Waypoints || []} playerRef={playerRef} />
+    
+                                )}
+            </div>
+            <div class="row-start-2 col-start-0 col-span-2 border-2"> 
+            {loading ? (
+                                    <p>Chargement des données...</p>
+                                ) : error ? (
+                                    <p>Erreur : {error}</p>
+                                ) : (
+                                    <TextChap Keywords={jsonData.Keywords} playerRef={playerRef}/>
+    
+                                )}
+    
+            </div>
+         
+    
         </div>
-    );
+      );
 }
 
 export default App;
