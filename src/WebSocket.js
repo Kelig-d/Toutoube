@@ -49,35 +49,46 @@ export function Chat(props) {
 
     const submitMessage = (currentUser, messageString,currentMoment) => {
         if(currentUser != "" && messageString != ""){
-            const message = { name: currentUser, message: messageString}
-            connection.current.send(JSON.stringify(message))
+            console.log(parseInt(currentMoment));
+                   
+            if(currentMoment == "" ){
+                const message = { name: currentUser, message: messageString}
+                connection.current.send(JSON.stringify(message))
+            }else {
+                const message = { name: currentUser, message: messageString, moment: parseInt(currentMoment)}
+                connection.current.send(JSON.stringify(message))
+            }
+        
         }
     };
 
+    function date (messagedate){
+        const newDate = new Date(messagedate).toLocaleString("fr-FR", { month: "2-digit", day: "2-digit", year: "numeric", hour:"2-digit", minute:"2-digit", second: "2-digit"})
+        return  newDate
+    }
+
+    
+    function timeMessage(messageMoment){
+        if (messageMoment != null){
+            const moment = parseInt(messageMoment)/60
+                return moment
+        }
+        else {
+            const Nomoment = ""
+            return Nomoment
+        }
+    }
+    
     return (
         <div>
-            <div id="chat" className="custom-scrollbars__thumb mt-4">
-                {messages.length > 0 ? (
-                    messages.map((message, index) => (
-                        <div key={index} >
-                            <p>{new Date(message.when).toLocaleString("fr-FR", { month: "2-digit", day: "2-digit", year: "numeric", hour:"2-digit", minute:"2-digit", second: "2-digit"})} 
-                                <strong>  {message.name} : </strong>{message.message} 
-                                {message.moment}
-                            </p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No messages received yet.</p>
-                )}
-                <div id={'chatParent'} ref={chatParent}/>
-            </div>
             <Form>
                 <Row className="align-items-center">
                     <Col xs="6">
                         <Form.Control className="mb-2" placeholder="Name" value={currentUser} onChange={(e) => setCurrentUser(e.target.value)} required/>
                     </Col>
                     <Col xs="auto">
-                        <Form.Check className="mb-2" label="moment" value={currentMoment} onChange={(e) => setCurrentMoment(e.target.value)} />
+                        <Form.Check className="mb-2" label="moment" value={currentMoment}
+                             onChange={(e) => setCurrentMoment(e.target.checked ? props.playerRef.current.currentTime() : "")} />
                     </Col>
                     <Col xs="auto">
                         <Button className="mb-2"
@@ -91,6 +102,20 @@ export function Chat(props) {
                 </Row>
                     <Form.Control className="me-auto" placeholder="Your message..." value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} required/>
             </Form>
+            <div id="chat" className="custom-scrollbars__thumb mt-4">
+                {messages.length > 0 ? (
+                    messages.map((message) => (
+                        <div >
+                            <p> {date(message.when)} 
+                                <strong>  {message.name} : </strong> {message.message}  {timeMessage(message.moment)}
+                            </p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No messages received yet.</p>
+                )}
+                <div id={'chatParent'} ref={chatParent}></div>
+            </div>
         </div>
     );
 }
