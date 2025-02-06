@@ -3,7 +3,7 @@ import L from 'leaflet';
 
 function MapViewer(props) {
     const LeafIcon = new L.Icon({
-        iconUrl: require('./img/pin.png'),
+        iconUrl: require('../img/pin.png'),
         iconSize: new L.Point(75, 75),
         iconAnchor: [37.5, 75],
         className: 'leaflet-div-icon',

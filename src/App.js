@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import VideoPlayer from "./VideoPlayer";
-import Chapitrage from "./chapitrage";
-import TextChap from "./TextChap";
-import Chat from "./WebSocket";
+import VideoPlayer from "./Components/VideoPlayer";
+import Chapitrage from "./Components/chapitrage";
+import TextChap from "./Components/TextChap";
+import Chat from "./Components/WebSocket";
 import './App.css';
 import "leaflet/dist/leaflet.css";
-import MapViewer from "./MapViewer";
+import MapViewer from "./Components/MapViewer";
 
 function App() {
     const playerRef = React.useRef(null);
