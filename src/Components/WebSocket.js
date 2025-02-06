@@ -121,7 +121,7 @@ export function Chat(props) {
                         <Button 
                             variant="link" 
                             size="sm" 
-                            onClick={() => { props.playerRef.current.currentTime = message.moment; }}
+                            onClick={() => { props.playerRef.current.currentTime(message.moment) }}
                         >
                             {timeMessage(message.moment)}
                         </Button>
